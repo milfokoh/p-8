@@ -55,11 +55,12 @@ ul
 {
     position: relative;
 
-    display: flex;
+    display: grid;
     overflow: hidden;
 
     height: 100%;
     margin: auto;
+
 }
 
 .center::before,
@@ -70,32 +71,104 @@ ul
     content: '';
 }
 
-.canvas
-{
+.canvas {
     position: relative;
-
     overflow: hidden;
-
     width: 900px;
     height: 600px;
-    margin: auto;
-
     background: linear-gradient(#013971, #000c18 60%);
+    display: grid;
+    grid-template-areas:
+        "left-top . right-top"
+        "wrapper wrapper wrapper"
+        "left-bottom . right-bottom";
+    margin: auto;
+}
+
+.wrapper {
+    grid-area: wrapper;
+    height: 550px;
+}
+
+.left-top-corner {
+    grid-area: left-top;
+    z-index: 2;
+}
+
+.left-bottom-corner {
+    grid-area: left-bottom;
+    z-index: 2;
+}
+
+.right-top-corner {
+    grid-area: right-top;
+    z-index: 2;
+}
+
+.right-bottom-corner {
+    grid-area: right-bottom;
+    z-index: 3;
+}
+
+:root:has(.left-bottom-corner:hover) .canvas {
+    animation: left-bottom-corner 0.5s forwards;
+}
+
+:root:has(.left-top-corner:hover) .canvas {
+    animation: left-top-corner 0.5s forwards;
+}
+
+:root:has(.right-top-corner:hover) .canvas {
+    animation: right-top-corner 0.5s forwards;
+}
+
+:root:has(.right-bottom-corner:hover) .canvas {
+    animation: right-bottom-corner 0.5s  forwards;
+}
+
+@keyframes left-bottom-corner {
+    100% {
+        border: 5px solid #a4df0d00;  
+        transform: rotate3d(2, -2, -1, 10deg);
+    }
+}
+
+@keyframes left-top-corner {
+    100% {
+        border: 5px solid #a4df0d00;  
+        transform: rotate3d(2, -2, -1, -10deg);
+    }
+}
+
+@keyframes right-top-corner {
+    100% {
+        border: 5px solid #a4df0d00;  
+        transform: rotate3d(-1, -2, 2, -5deg);
+    }
+}
+
+@keyframes right-bottom-corner {
+    100% {
+        border: 5px solid #a4df0d00;  
+        transform: rotate3d(2, 0, 1, 5deg);        
+    }
 }
 
 .moon
 {
     position: absolute;
-    top: 100px;
-    left: calc(50% - 60px);
+    top: 200px;
+    left: calc(30% - 60px);
 
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
 
     opacity: 1;
     border-radius: 50%;
     background: #fefce6;
     box-shadow: 0 1px 30px 0 rgba(255, 255, 255, 1);
+
+    animation: moon 5s linear 1 forwards; 
 }
 
 .center::after
@@ -157,6 +230,7 @@ ul
 
     width: 44rem;
     height: 10rem;
+    animation: train 9500ms linear infinite;
 }
 
 .engine-front,
@@ -247,29 +321,33 @@ ul
     left: .2rem;
 
     width: .8rem;
-    height: 1.4rem;
+    height: 1.5rem;
 
     border-radius: 50%;
     background: rgba(255, 255, 255, .8);
+
+    animation: smoke 1100ms linear infinite;
 }
 
 .smoke-2
 {
-    left: .4rem;
+    left: .2rem;
 
-    animation-delay: .1s;
+    animation-delay: .3s;
 }
 
 .smoke-3
 {
-    left: .6rem;
+    left: .5rem;
 
-    animation-delay: .2s;
+    animation-delay: .5s;
 }
 
 .smoke-4
 {
-    left: .8rem;
+    left: .2rem;
+    animation-delay: .7s;
+
 }
 
 .engine-body
@@ -347,6 +425,8 @@ ul
     border: .3rem solid rgba(0, 0, 0, .6);
     border-radius: 50%;
     background: orange;
+
+    animation: wheel-rotate 5s linear infinite;
 }
 
 .wheel-2
@@ -363,6 +443,7 @@ ul
     height: 3.8rem;
 
     border-width: .5rem;
+
 }
 
 .wheel-4
@@ -524,6 +605,8 @@ ul
     background: white;
 
     transform-origin: 100% 50%;
+    
+    animation: wheel-joint 5s linear infinite;
 }
 
 .wheel-joint::before,
@@ -639,15 +722,16 @@ ul
 {
     position: absolute;
     z-index: 1;
-    top: 0;
-    left: 0;
+    top: 150px;
 
-    width: 200px;
-    height: 60px;
+    width: 150px;
+    height: 35px;
 
-    opacity: .8;
+    opacity: .9;
     border-radius: 200px;
     background: #fff;
+
+    animation: cloud 15s linear infinite;
 }
 
 .cloud:before,
@@ -657,21 +741,164 @@ ul
     top: -15px;
     left: 10px;
 
-    width: 100px;
-    height: 80px;
+    width: 80px;
+    height: 60px;
 
     content: '';
 
-    border-radius: 100px;
+    border-radius: 90px;
     background: #fff;
+
 }
 
 .cloud:after
 {
-    top: -55px;
+    top: -35px;
     right: 15px;
     left: auto;
 
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
+}
+
+.mini {    
+    width: 100px;
+    height: 30px;
+
+    animation: mini-cloud 9s linear infinite;
+}
+
+.mini:before,
+.mini:after
+{
+    top: -15px;
+    left: 10px;
+
+    width: 50px;
+    height: 50px;
+
+}
+
+.mini:after
+{
+    top: -25px;
+    right: 5px;
+    left: auto;
+
+    width: 60px;
+    height: 60px;
+}
+
+.reverse {
+    transform:  scale(-1, 1);
+
+    animation: reverse-cloud 15s linear infinite;
+}
+
+.creep {
+    top: 55%;
+    width: 75px;
+    left: 40px;
+    opacity: 1;
+    position: absolute;
+    z-index: 2;
+    animation: crepp-cloud 9s linear infinite;
+}
+
+.creep:before,
+.creep:after
+{
+    top: -15px;
+    left: 10px;
+
+    width: 50px;
+    height: 50px;
+
+}
+
+.creep:after
+{
+    top: -25px;
+    right: 5px;
+    left: auto;
+
+    width: 55px;
+    height: 60px;
+}
+
+@keyframes cloud {
+    0% {
+        left: -5%;
+        opacity: .9;
+    }
+    100% {
+        left: 100%;
+        opacity: 1;
+    }
+    
+}
+
+@keyframes mini-cloud {
+    0% {
+        left: 45%;
+        top: 10%;
+    }
+    100% {
+        left: 100%;
+        top: 12%;
+    }    
+}
+
+@keyframes reverse-cloud {
+    0% {
+        left: 10%;
+        top: 5%;
+    }
+    100% {
+        left: 100%;
+        top: 7%;
+    } 
+}
+
+@keyframes crepp-cloud {
+    0% {
+        left: 10%;
+        top: 45%;
+        opacity: 1;
+    }
+    100% {
+        left: 100%;
+        top: 40%;
+        opacity: 1;
+    } 
+}
+
+@keyframes wheel-rotate {
+    100% {
+        transform: rotate(calc(-360deg));
+    } 
+}
+
+@keyframes wheel-joint {
+    100% {
+        transform: rotate(calc(360deg));
+    }
+}
+
+@keyframes train {
+    100% {
+        transform: translateX(-50rem);
+    }
+}
+
+@keyframes moon {
+    100% {
+        transform: translateY(-100px) translateX(220px) scale(.6);
+    }
+}
+
+@keyframes smoke {
+    100% {
+        transform: translateY(-30px) translateX(30px);
+    }
 }
